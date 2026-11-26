@@ -1,0 +1,37 @@
+from selenium import webdriver
+from selenium.webdriver.chrome.service import Service
+import time
+
+# 1. starting the  browser
+chrome = webdriver.Chrome()
+chrome.maximize_window()
+
+# 2. looking at frist task
+chrome.get("https://wikipedia.org")
+print("First Website Title:", chrome.title)
+print("First Website URL:", chrome.current_url)
+time.sleep(2)
+
+# 3. Visit secno website
+chrome.get("https://python.org")
+print("Second Website Title:", chrome.title)
+print("Second Website URL:", chrome.current_url)
+time.sleep(2)
+
+# 4. Navigate back to first earlier wbestie
+chrome.back()
+time.sleep(2)
+print("Title after back():", chrome.title)
+
+# 5. Navigate forwrd
+chrome.forward()
+time.sleep(2)
+print("Title after forward():", chrome.title)
+
+# 6. Reload pag
+chrome.refresh()
+time.sleep(2)
+print("Title after refresh():", chrome.title)
+
+# 7. Terminate all sessn
+chrome.quit()
