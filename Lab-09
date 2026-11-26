@@ -1,0 +1,196 @@
+
+# ====================> Exercise 3 — Registration Form Basics <===========
+
+# from selenium import webdriver
+# from selenium.webdriver.common.by import By
+# from selenium.webdriver.support.ui import WebDriverWait
+# from selenium.webdriver.support import expected_conditions as EC
+
+# driver = webdriver.Chrome()
+# wait = WebDriverWait(driver, 10)
+
+# try:
+#     driver.get("https://demoqa.com/automation-practice-form")
+#     driver.maximize_window()
+
+#     # Hide fixed ads/footer if present so clicks are not intercepted
+#     driver.execute_script("""
+#         const fixedban = document.getElementById('fixedban');
+#         if (fixedban) fixedban.style.display = 'none';
+#         const footer = document.querySelector('footer');
+#         if (footer) footer.style.display = 'none';
+#     """)
+
+#     first_name_input = wait.until(EC.visibility_of_element_located((By.ID, "firstName")))
+#     last_name_input = driver.find_element(By.ID, "lastName")
+#     email_input = driver.find_element(By.ID, "userEmail")
+#     mobile_input = driver.find_element(By.ID, "userNumber")
+
+#     first_name = "Muhammad"
+#     last_name = "Aadil"
+#     email = "aadil.dev@example.com"
+#     mobile = "0300123456"
+
+#     first_name_input.clear()
+#     first_name_input.send_keys(first_name)
+
+#     last_name_input.clear()
+#     last_name_input.send_keys(last_name)
+
+#     email_input.clear()
+#     email_input.send_keys(email)
+
+#     # Select Male gender via its label and verify underlying radio input
+#     gender_label = driver.find_element(By.CSS_SELECTOR, "label[for='gender-radio-1']")
+#     driver.execute_script("arguments[0].scrollIntoView({block: 'center'});", gender_label)
+#     gender_label.click()
+#     gender_radio = driver.find_element(By.ID, "gender-radio-1")
+
+#     mobile_input.clear()
+#     mobile_input.send_keys(mobile)
+
+#     # Verify entered values
+#     actual_first = first_name_input.get_attribute("value")
+#     actual_last = last_name_input.get_attribute("value")
+#     actual_email = email_input.get_attribute("value")
+#     actual_mobile = mobile_input.get_attribute("value")
+#     gender_selected = gender_radio.is_selected()
+
+#     print("First Name :", actual_first, "| Match:", actual_first == first_name)
+#     print("Last Name  :", actual_last, "| Match:", actual_last == last_name)
+#     print("Email      :", actual_email, "| Match:", actual_email == email)
+#     print("Gender     :", gender_label.text, "| Selected:", gender_selected)
+#     print("Mobile     :", actual_mobile, "| Match:", actual_mobile == mobile)
+
+#     assert actual_first == first_name
+#     assert actual_last == last_name
+#     assert actual_email == email
+#     assert gender_selected is True
+#     assert actual_mobile == mobile
+# finally:
+#     driver.quit()
+
+
+
+
+
+
+#===========> Exercise 4 — Checkbox State Verification <=========
+
+
+# from selenium import webdriver
+# from selenium.webdriver.common.by import By
+
+# driver = webdriver.Chrome()
+
+# try:
+#     driver.get("https://the-internet.herokuapp.com/checkboxes")
+
+#     checkbox = driver.find_element(By.CSS_SELECTOR, "#checkboxes input[type='checkbox']:nth-of-type(1)")
+
+#     initial_state = checkbox.is_selected()
+#     print("Initial checkbox state:", initial_state)
+
+#     # First click
+#     checkbox.click()
+#     after_first_click = checkbox.is_selected()
+#     print("State after 1st click:", after_first_click)
+#     assert after_first_click is not initial_state
+
+#     # Second click (return to original state)
+#     checkbox.click()
+#     after_second_click = checkbox.is_selected()
+#     print("State after 2nd click:", after_second_click)
+#     assert after_second_click is initial_state
+
+#     print("Verification passed: checkbox returned to its original state.")
+# finally:
+#     driver.quit()
+
+
+
+
+#  ==============> Exercise 5 — Radio Button Selection <==============
+
+# from selenium import webdriver
+# from selenium.webdriver.common.by import By
+# from selenium.webdriver.support.ui import WebDriverWait
+# from selenium.webdriver.support import expected_conditions as EC
+
+# driver = webdriver.Chrome()
+# wait = WebDriverWait(driver, 10)
+
+# try:
+#     driver.get("https://demoqa.com/automation-practice-form")
+#     driver.maximize_window()
+
+#     driver.execute_script("""
+#         const fixedban = document.getElementById('fixedban');
+#         if (fixedban) fixedban.style.display = 'none';
+#         const footer = document.querySelector('footer');
+#         if (footer) footer.style.display = 'none';
+#     """)
+
+#     male_label = wait.until(EC.element_to_be_clickable((By.CSS_SELECTOR, "label[for='gender-radio-1']")))
+#     female_label = driver.find_element(By.CSS_SELECTOR, "label[for='gender-radio-2']")
+#     other_label = driver.find_element(By.CSS_SELECTOR, "label[for='gender-radio-3']")
+
+#     male_input = driver.find_element(By.ID, "gender-radio-1")
+#     female_input = driver.find_element(By.ID, "gender-radio-2")
+#     other_input = driver.find_element(By.ID, "gender-radio-3")
+
+#     def print_group_states(step_label):
+#         states = {
+#             "Male": male_input.is_selected(),
+#             "Female": female_input.is_selected(),
+#             "Other": other_input.is_selected(),
+#         }
+#         selected_count = sum(1 for v in states.values() if v)
+#         print(f"[{step_label}] States -> {states} | Total selected in group: {selected_count}")
+#         assert selected_count == 1
+
+#     # Select first option (Male)
+#     driver.execute_script("arguments[0].scrollIntoView({block: 'center'});", male_label)
+#     male_label.click()
+#     print_group_states("After selecting Male")
+
+#     # Select second option (Female)
+#     female_label.click()
+#     print_group_states("After selecting Female")
+# finally:
+#     driver.quit()
+
+
+
+
+
+# =============> Exercise 6 — Dropdown Selection <============
+
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import Select
+
+driver = webdriver.Chrome()
+
+try:
+    driver.get("https://the-internet.herokuapp.com/dropdown")
+
+    dropdown_element = driver.find_element(By.ID, "dropdown")
+    select = Select(dropdown_element)
+
+    # 1. Select by visible text
+    select.select_by_visible_text("Option 1")
+    current = select.first_selected_option
+    print("Selected by visible text -> Text:", current.text, "| Value:", current.get_attribute("value"))
+
+    # 2. Select by index (index 2 corresponds to "Option 2" on this page)
+    select.select_by_index(2)
+    current = select.first_selected_option
+    print("Selected by index (2)    -> Text:", current.text, "| Value:", current.get_attribute("value"))
+
+    # 3. Select by value ("1" corresponds to "Option 1")
+    select.select_by_value("1")
+    current = select.first_selected_option
+    print("Selected by value ('1')  -> Text:", current.text, "| Value:", current.get_attribute("value"))
+finally:
+    driver.quit()
